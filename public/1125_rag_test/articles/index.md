@@ -1,7 +1,7 @@
 ---
 title: RAGってなに？-RAGの基礎を実装してみた-
-tags: RAG OpenAI 新卒エンジニア
-  - ''
+tags: 
+  - 'RAG' 'OpenAI' '新卒エンジニア'
 private: false
 updated_at: ''
 id: null
