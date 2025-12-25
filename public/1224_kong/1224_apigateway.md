@@ -78,13 +78,12 @@ KongがAPIの入口として動作することを最小構成で確認してみ�
 Kongは起動時にkong.ymlを読み込み、動作します。
 
 ```
-MSYS_NO_PATHCONV=1 docker run -d \
+docker run -d \
   --name kong \
   -e KONG_DATABASE=off \
   -e KONG_DECLARATIVE_CONFIG=/kong/kong.yml \
   -v "./kong.yml:/kong/kong.yml" \
   -p 8000:8000 \
-  -p 8001:8001 \
   kong/kong-gateway
   ```
 
