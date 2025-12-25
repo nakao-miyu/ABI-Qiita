@@ -1,7 +1,9 @@
 ---
 title: API Gatewayがないとどうなる？-Kong Gatewayで触ってみる-
 tags: 
-  - 'Kong' 'APIGateway' '新卒エンジニア'
+  - 'Kong'
+  - 'APIGateway' 
+  - '新卒エンジニア'
 private: false
 updated_at: ''
 id: null
@@ -10,7 +12,8 @@ slide: false
 ignorePublish: false
 ---
 ### 🌸はじめに
-Kong API GatewayやKong AIなどといった言葉を耳にしますが
+弊社ABIがKong社とパートナーシップを締結しました。
+そのため、社内でKong API GatewayやKong AIなどといった言葉をよく耳にしますが
 一体それって何をやっているの？という段階なので、
 まずは、基礎であるAPI Gatewayについて
 Kong Gatewayを最小限の構成で触ってみて理解できればなと思っています。
@@ -28,10 +31,12 @@ APIをそのまま公開すると、誰でも叩ける、何回でも叩ける�
 しかし、APIを複数持つ場合、
 これらの処理をAPIごとに個別に実装する必要があります。
 
-......これはしんどい。
+...これはしんどい。
 
 もしAPI Gatewayがなければ、すべて自前開発になり、工数は膨れ上がり
 運用の大変さ、セキュリティリスクも高くなります。
+
+参照：https://security.i-standard.jp/post/api-security-basics
 
 ### 🦍ここで登場するのがAPI Gateway
 ここで登場するのがAPI Gatewayです
@@ -42,7 +47,13 @@ APIを直接叩かせるのではなく、すべてのリクエストを一度 A
 これにより、認証・制限・ログといった共通処理を
 API Gateway 側に集約できます。
 
-このAPI Gatewayを実装した代表的なプロダクトの一つが「Kong Gateway」です。
+API Gatewayの代表的なものとして、AWS API Gateway、Azure APIMなどの
+クラウドマネージド型や
+
+Kong Gateway、Tyk,GraviteeなどのOSS型があります。
+パートナーシップ締結をしている会社であること、手元の環境で基礎を学ぶことを理由に
+高性能かつ拡張性がある「Kong Gateway」を題材に取り上げたいと思います。
+
 公式HP：https://jp.konghq.com/
 
 ### 🪐最小構成で触ってみる
@@ -55,6 +66,16 @@ API GatewayをDBなしのモードで起動し、KongがAPIの入口として動
 テスト用の転送先として httpbin.org を利用します。
 /test というパスで受けたリクエストを、
 httpbin.org にルーティングする設定を行います。
+```
+_format_version: "3.0"
+services:
+  - name: httpbin
+    url: https://httpbin.org
+    routes:
+      - name: httpbin-route
+        paths:
+          - /test
+```
 
 2.KongをDockerで起動
 
