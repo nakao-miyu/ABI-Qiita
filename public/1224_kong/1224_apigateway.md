@@ -57,10 +57,6 @@ Kong Gateway、Tyk,GraviteeなどのOSS型があります。
 公式HP：https://jp.konghq.com/
 
 ### 🪐最小構成で触ってみる
-API GatewayをDBなしのモードで起動し、KongがAPIの入口として動作することを
-最小構成で確認してみます。
-設定はyamlファイルで定義し、dockerコンテナとして起動します
-
 １．Kongの設定ファイル（Kong.yml）を作成
 
 テスト用の転送先として httpbin.org を利用します。
@@ -76,8 +72,21 @@ services:
         paths:
           - /test
 ```
+２．Kong Gatewayを起動
+以下のコマンドでKong GatewayをDBなしのモードで起動し、
+KongがAPIの入口として動作することを最小構成で確認してみます。
+Kongは起動時にkong.ymlを読み込み、動作します。
 
-2.KongをDockerで起動
+```
+MSYS_NO_PATHCONV=1 docker run -d \
+  --name kong \
+  -e KONG_DATABASE=off \
+  -e KONG_DECLARATIVE_CONFIG=/kong/kong.yml \
+  -v "./kong.yml:/kong/kong.yml" \
+  -p 8000:8000 \
+  -p 8001:8001 \
+  kong/kong-gateway
+  ```
 
 3.Kong経由でAPIを呼ぶ
 Kongを通してAPIを叩いてみます
