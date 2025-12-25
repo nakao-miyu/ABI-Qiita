@@ -1,4 +1,5 @@
 {
+  "root_dir": "./articles",
   "includePrivate": false,
   "host": "localhost",
   "port": 8888
